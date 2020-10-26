@@ -1,5 +1,9 @@
 from django.db import models, transaction
 from model_utils import Choices
+from django.contrib.auth import get_user_model
+
+
+Investor = get_user_model()
 
 
 class Qualification(models.Model):
@@ -11,6 +15,7 @@ class Qualification(models.Model):
         ('DE', 'denial'),
 
     )
+    owner = models.OneToOneField(Investor, on_delete=models.CASCADE)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES,
                               default=STATUS_CHOICES.NW)
     rule_one = models.BooleanField(default=False)
